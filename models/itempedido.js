@@ -11,15 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ItemPedido.belongsTo(models.Pedido, {foreignKey: 'PedidoId', as: 'pedidos'});
-      ItemPedido.belongsTo(models.Servico, {foreignKey: 'ServicoId', as: 'servicos'});
+      ItemPedido.belongsTo(models.Pedido, {foreignKey: 'PedidoId', as: 'pedidos' });
+      ItemPedido.belongsTo(models.Servico, {foreignKe: 'ServicoId', as: 'servicos'});
     }
-  };
+  }
   ItemPedido.init({
-    quantidade: DataTypes.INTEGER,
-    valor: DataTypes.FLOAT,
     PedidoId: DataTypes.INTEGER,
-    ServicoId: DataTypes.INTEGER
+    ServicoId: DataTypes.INTEGER,
+    quantidade: DataTypes.INTEGER,
+    valor: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'ItemPedido',

@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       ItemCompra.belongsTo(models.Compra, {foreignKey: 'CompraId', as: 'compras'});
       ItemCompra.belongsTo(models.Produto, {foreignKey: 'ProdutoId', as: 'produtos'});
     }
-  };
+  }
   ItemCompra.init({
-    quantidade: DataTypes.INTEGER,
-    valor: DataTypes.FLOAT,
     CompraId: DataTypes.INTEGER,
-    ProdutoId: DataTypes.INTEGER
+    ProdutoId: DataTypes.INTEGER,
+    quantidade: DataTypes.INTEGER,
+    valor: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'ItemCompra',

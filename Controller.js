@@ -10,13 +10,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-let cliente = models.Cliente;
-let itempedido = models.ItemPedido;
-let pedido = models.Pedido;
 let servico = models.Servico;
+let cliente = models.Cliente;
+let pedido = models.Pedido;
+let itempedido = models.ItemPedido;
 let compra = models.Compra;
-let itemcompra = models.itemCompra;
 let produto = models.Produto;
+let itemcompra = models.itemCompra;
 
 
 let port = process.env.PORT || 3001;
@@ -60,21 +60,6 @@ app.post('/cliente', async(req, res)=> {
         });
     });
 });
-app.post('/itempedido', async(req, res)=>{
-    await itempedido.create(
-        req.body
-    ).then(function(){
-        return res.json({
-            error: false,
-            message: "Item criado com sucesso!"
-        })
-    }).catch(function(erro){
-        return res.status(400).json({
-            error: true,
-            message: "Foi impossivel se conectar."
-        });
-    });
-});
 app.post('/cliente/:id/pedido', async(req, res)=> {
     const ped = {
         dataPedido: req.body.data,
@@ -100,19 +85,19 @@ app.post('/cliente/:id/pedido', async(req, res)=> {
             });
         });
 });
-app.post('/itemcompra', async(req, res)=>{
-    await itemcompra.create(
-        req.body
+app.post('/itempedidos', async(req,res)=>{
+    await itempedido.create(
+       req.body
     ).then(function(){
         return res.json({
             error: false,
-            message: "Item criado com sucesso!"
+            message: 'Item criado com sucesso!'
         })
-    }).catch(function(erro){
+    }).catch(function(error){
         return res.status(400).json({
             error: true,
-            message: "Foi impossivel se conectar."
-        });
+            message: 'Foi impossivel criar Item.'
+        })
     });
 });
 app.post('/produto', async (req, res)=>{
@@ -122,6 +107,21 @@ app.post('/produto', async (req, res)=>{
         return res.json({
             error: false,
             message: "Produto criado com sucesso!"
+        })
+    }).catch(function(erro){
+        return res.status(400).json({
+            error: true,
+            message: "Foi impossivel se conectar."
+        });
+    });
+});
+app.post('/itemcompra', async(req, res)=>{
+    await itemcompra.create(
+        req.body
+    ).then(function(){
+        return res.json({
+            error: false,
+            message: "Item criado com sucesso!"
         })
     }).catch(function(erro){
         return res.status(400).json({
@@ -194,6 +194,14 @@ app.get('/pedidos', async(req, res)=>{
         });
     });
 });
+app.get('/listaitempedidos', async(req, res)=>{
+    await itempedido.findAll({
+        //raw:true
+        order: [['nome', 'ASC']]
+    }).then(function(servicos){
+        res.json({servicos});
+    });
+});
 app.get('/compras', async(req, res)=>{
     await compra.findAll()
      .then(comp => {
@@ -214,14 +222,6 @@ app.get('/listaprodutos', async(req, res)=>{
         order: [['nome', 'ASC']]
     }).then(function(produto){
         res.json({produto});
-    });
-});
-app.get('/listaitempedidos', async(req, res)=>{
-    await itempedido.findAll({
-        //raw:true
-        order: [['nome', 'ASC']]
-    }).then(function(servicos){
-        res.json({servicos});
     });
 });
 app.get('/listaitemcompra', async(req, res)=>{

@@ -11,13 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-     Compra.belongsTo(models.Cliente, {foreignKey:'ClienteId', as: 'cliente'});
-     Compra.belongsToMany(models.Servico, {foreignKey:'Produto', through: 'ItemCompra', as: 'compraprod'});
-     Compra.hasMany(models.ItemPedido, {foreignkey: 'CompraId', as: 'item_compras'});
+      Compra.belongsTo(models.Cliente, {foreignKey:'ClienteId', as: 'cliente'});
+      Compra.belongsToMany(models.Servico, {foreignKey:'Produto', through: 'ItemCompra', as: 'compraprod'});
+      Compra.hasMany(models.ItemPedido, {foreignkey: 'CompraId', as: 'item_compras'});
+ 
     }
-  };
+  }
   Compra.init({
-    data: DataTypes.DATEONLY,
+    dataCompra: DataTypes.DATEONLY,
     ClienteId: DataTypes.INTEGER
   }, {
     sequelize,

@@ -13,8 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Produto.belongsToMany(models.Compra, { foreignKey: 'CompraId', through:'ItemCompra', as: 'compra_prod'});
       Produto.hasMany(models.ItemCompra, {foreignKey: 'ProdutoId', as: 'item_produtos'});
+
     }
-  };
+  }
   Produto.init({
     nome: DataTypes.STRING,
     descricao: DataTypes.STRING
